@@ -1,16 +1,20 @@
 #ifndef _MODULE_MAIN
 #define _MODULE_MAIN
 
+#include <SoftwareSerial.h>
 #include "Motor.h"
 
 class Main {
   private:
+    static SoftwareSerial BTSerial;
     static Motor motorLeft;
     static Motor motorRight;
     static bool btConnected;
 
   public:
     static void setup() {
+      BTSerial.begin(9600);
+
       pinMode(PIN_LED, OUTPUT);
 
       // Motors speed
@@ -21,10 +25,14 @@ class Main {
     static void loop() {
       char bt;
 
-      if (Serial.available()) {
-        btConnected = true;
-        bt = Serial.read();
-        Serial.println(bt);
+      if (BTSerial.available()) {
+        if (!btConnected) {
+          btConnected = true;
+          Serial.println('BT connected!');
+        }
+        
+        bt = BTSerial.read();
+        Serial.println('BT: ' + bt);
       } else {
         // BT disconnected
         if (btConnected) {
@@ -77,6 +85,7 @@ class Main {
     }
 };
 
+static SoftwareSerial Main::BTSerial(0, 1); // RX | TX
 Motor Main::motorLeft(PIN_MOTOR_11, PIN_MOTOR_12, PIN_MOTOR_13, PIN_MOTOR_14);
 Motor Main::motorRight(PIN_MOTOR_21, PIN_MOTOR_22, PIN_MOTOR_23, PIN_MOTOR_24);
 bool Main::btConnected = false;
