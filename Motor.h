@@ -131,13 +131,11 @@ class Motor: public Runnable {
     }
 
     Motor* forward() {
-      this->_nextInterval = 0;
       this->_action = 1;
       return this;
     }
 
     Motor* backward() {
-      this->_nextInterval = 0;
       this->_action = 2;
       return this;
     }
