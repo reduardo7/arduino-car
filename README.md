@@ -2,10 +2,15 @@
 
 ## Connection
 
-## Important notes
+See [`Config.h`](./Config.h).
 
-1. Disconnect the _Bluetooth module_ **before** upload the project to the _Arduino_ device.
+### Important notes
 
+1. **Disconnect** the **_Bluetooth module_** **before upload** the project to the _Arduino_ device.
+
+## Libraries
+
+- <https://github.com/reduardo7/arduino-robot>
 ## Doc
 
 - <https://create.arduino.cc/projecthub/samanfern/bluetooth-controlled-car-d5d9ca>
