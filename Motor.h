@@ -125,7 +125,7 @@ class Motor: public Runnable {
     }
 
     Motor* setInterval(int interval) {
-      this->_nextInterval = 0;
+      // this->_nextInterval = 0;
       this->_interval = interval;
       return this;
     }
