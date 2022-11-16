@@ -22,8 +22,8 @@ class Main {
       pinMode(PIN_EXTRA, OUTPUT);
 
       // Motors speed
-      motorLeft.setInterval(speed);
-      motorRight.setInterval(speed);
+      motorLeft.setSpeed(speed);
+      motorRight.setSpeed(speed);
     }
 
     static void loop() {
@@ -49,64 +49,64 @@ class Main {
       switch (bt) {
         case 'F':
           // move forward
-          motorLeft.setInterval(speed);
-          motorRight.setInterval(speed);
+          motorLeft.setSpeed(speed);
+          motorRight.setSpeed(speed);
           motorLeft.forward();
           motorRight.forward();
           break;
         
         case 'I':
           // move forward right
-          motorLeft.setInterval(speed);
-          motorRight.setInterval(speed + SPEED_TURN);
+          motorLeft.setSpeed(speed);
+          motorRight.setSpeed(SPEED_TURN);
           motorLeft.forward();
           motorRight.forward();
           break;
       
         case 'R':
           // turn right
-          motorLeft.setInterval(speed);
-          motorRight.setInterval(speed);
+          motorLeft.setSpeed(speed);
+          motorRight.setSpeed(speed);
           motorLeft.forward();
           motorRight.backward();
           break;
       
         case 'J':
           // move back right
-          motorLeft.setInterval(speed);
-          motorRight.setInterval(speed + SPEED_TURN);
+          motorLeft.setSpeed(speed);
+          motorRight.setSpeed(SPEED_TURN);
           motorLeft.backward();
           motorRight.backward();
           break;
       
         case 'B':
           // move back
-          motorLeft.setInterval(speed);
-          motorRight.setInterval(speed);
+          motorLeft.setSpeed(speed);
+          motorRight.setSpeed(speed);
           motorLeft.backward();
           motorRight.backward();
           break;
       
         case 'H':
           // move back left
-          motorLeft.setInterval(speed + SPEED_TURN);
-          motorRight.setInterval(speed);
+          motorLeft.setSpeed(SPEED_TURN);
+          motorRight.setSpeed(speed);
           motorLeft.backward();
           motorRight.backward();
           break;
       
         case 'L':
           // turn left
-          motorLeft.setInterval(speed);
-          motorRight.setInterval(speed);
+          motorLeft.setSpeed(speed);
+          motorRight.setSpeed(speed);
           motorLeft.backward();
           motorRight.forward();
           break;
         
         case 'G':
           // move forward left
-          motorLeft.setInterval(speed + SPEED_TURN);
-          motorRight.setInterval(speed);
+          motorLeft.setSpeed(SPEED_TURN);
+          motorRight.setSpeed(speed);
           motorLeft.forward();
           motorRight.forward();
           break;
@@ -165,9 +165,9 @@ class Main {
 
         case 'q':
           // Speed 100
-          speed = SPEED_MIN - 100;
-          motorLeft.setInterval(speed);
-          motorRight.setInterval(speed);
+          speed = SPEED_MAX;
+          motorLeft.setSpeed(speed);
+          motorRight.setSpeed(speed);
           break;        
 
         default:
@@ -178,19 +178,19 @@ class Main {
           unsigned int i = String(bt).toInt();
 
           if (i >= 0 || i <= 9) {
-            speed = SPEED_MIN - (i * 10);
+            speed = SPEED_MAX - (i * 15);
 
-            motorLeft.setInterval(speed);
-            motorRight.setInterval(speed);
+            motorLeft.setSpeed(speed);
+            motorRight.setSpeed(speed);
           }
       }
     }
 };
 
 static SoftwareSerial Main::BTSerial(PIN_BT_RX, PIN_BT_TX);
-Motor Main::motorLeft(PIN_MOTOR_11, PIN_MOTOR_12, PIN_MOTOR_13, PIN_MOTOR_14);
-Motor Main::motorRight(PIN_MOTOR_21, PIN_MOTOR_22, PIN_MOTOR_23, PIN_MOTOR_24);
+Motor Main::motorLeft(PIN_MOTOR_L1, PIN_MOTOR_L2, PIN_MOTOR_LE);
+Motor Main::motorRight(PIN_MOTOR_R1, PIN_MOTOR_R2, PIN_MOTOR_RE);
 bool Main::btConnected = false;
-unsigned int Main::speed = SPEED_MIN;
+unsigned int Main::speed = SPEED_MAX;
 
 #endif
