@@ -165,7 +165,7 @@ class Main {
 
         case 'q':
           // Speed 100
-          speed = SPEED_MAX;
+          speed = 100;
           motorLeft.setSpeed(speed);
           motorRight.setSpeed(speed);
           break;        
@@ -178,7 +178,7 @@ class Main {
           unsigned int i = String(bt).toInt();
 
           if (i >= 0 || i <= 9) {
-            speed = SPEED_MAX - (i * 15);
+            speed = i * 10;
 
             motorLeft.setSpeed(speed);
             motorRight.setSpeed(speed);
@@ -191,6 +191,6 @@ static SoftwareSerial Main::BTSerial(PIN_BT_RX, PIN_BT_TX);
 Motor Main::motorLeft(PIN_MOTOR_L1, PIN_MOTOR_L2, PIN_MOTOR_LE);
 Motor Main::motorRight(PIN_MOTOR_R1, PIN_MOTOR_R2, PIN_MOTOR_RE);
 bool Main::btConnected = false;
-unsigned int Main::speed = SPEED_MAX;
+unsigned int Main::speed = 100;
 
 #endif

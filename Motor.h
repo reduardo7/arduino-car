@@ -17,7 +17,7 @@ class Motor: public Runnable {
     void _update() {
       digitalWrite(this->_pin1, this->i1);
       digitalWrite(this->_pin2, this->i2);
-      digitalWrite(this->_pinE, this->iE);
+      analogWrite(this->_pinE, 155 + this->iE);
     }
 
   protected:
@@ -42,15 +42,15 @@ class Motor: public Runnable {
     }
 
     Motor* forward() {
-      this->i1 = 1;
-      this->i2 = 0;
+      this->i1 = 0;
+      this->i2 = 1;
       this->_update();
       return this;
     }
 
     Motor* backward() {
-      this->i1 = 0;
-      this->i2 = 1;
+      this->i1 = 1;
+      this->i2 = 0;
       this->_update();
       return this;
     }

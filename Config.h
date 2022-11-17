@@ -17,7 +17,6 @@
 #define PIN_HORN 11
 #define PIN_EXTRA 10
 
-#define SPEED_MAX 255
-#define SPEED_TURN 100
+#define SPEED_TURN 70
 
 #endif
