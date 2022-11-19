@@ -58,7 +58,7 @@ class Main {
         case 'I':
           // move forward right
           motorLeft.setSpeed(speed);
-          motorRight.setSpeed(SPEED_TURN);
+          motorRight.stop();
           motorLeft.forward();
           motorRight.forward();
           break;
@@ -74,7 +74,7 @@ class Main {
         case 'J':
           // move back right
           motorLeft.setSpeed(speed);
-          motorRight.setSpeed(SPEED_TURN);
+          motorRight.stop();
           motorLeft.backward();
           motorRight.backward();
           break;
@@ -89,7 +89,7 @@ class Main {
       
         case 'H':
           // move back left
-          motorLeft.setSpeed(SPEED_TURN);
+          motorLeft.stop();
           motorRight.setSpeed(speed);
           motorLeft.backward();
           motorRight.backward();
@@ -105,7 +105,7 @@ class Main {
         
         case 'G':
           // move forward left
-          motorLeft.setSpeed(SPEED_TURN);
+          motorLeft.stop();
           motorRight.setSpeed(speed);
           motorLeft.forward();
           motorRight.forward();
