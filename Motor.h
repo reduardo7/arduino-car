@@ -17,7 +17,7 @@ class Motor: public Runnable {
     void _update() {
       digitalWrite(this->_pin1, this->i1);
       digitalWrite(this->_pin2, this->i2);
-      analogWrite(this->_pinE, 155 + this->iE);
+      analogWrite(this->_pinE, 150 + this->iE);
     }
 
   protected:
