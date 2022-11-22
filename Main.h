@@ -1,7 +1,5 @@
-#ifndef _MODULE_MAIN
-#define _MODULE_MAIN
-
 #include <SoftwareSerial.h>
+#include "StackArray.h"
 #include "Motor.h"
 
 class Main {
@@ -11,6 +9,12 @@ class Main {
     static Motor motorRight;
     static bool btConnected;
     static unsigned int speed;
+    
+    static char lastMove;
+    static unsigned long lastMoveTime;
+    static StackArray<char> historyMoves;
+    static StackArray<unsigned long> historyTimes;
+    static bool isRecordingHistory;
     
   public:
     static void setup() {
@@ -28,6 +32,7 @@ class Main {
 
     static void loop() {
       char bt;
+      unsigned long m = millis();
 
       if (BTSerial.available()) {
         if (!btConnected) {
@@ -44,6 +49,27 @@ class Main {
           bt = 'S';
           Serial.println('BT disconnected!');
         }
+      }
+
+      if (isRecordingHistory) {
+        if (lastMove != bt) {
+          // new move
+          historyMoves.push(lastMove);
+          historyTimes.push(m - lastMoveTime);
+          lastMove = bt;
+          lastMoveTime = m;
+
+          if (historyMoves.isFull()) {
+            bt = 'x'; // Stop recording            
+          }
+        }
+      } else if (!historyTimes.isEmpty()) {
+        if (lastMoveTime - m > 0) {
+          lastMoveTime = m + historyTimes.pop();
+          lastMove = historyMoves.pop();
+        }
+
+        bt = lastMove;
       }
 
       switch (bt) {
@@ -140,10 +166,16 @@ class Main {
 
         case 'X':
           // extra on
+          // Start recording
+          isRecordingHistory = true;
+          lastMove = bt;
+          lastMoveTime = m;
           digitalWrite(PIN_EXTRA, HIGH);
           break;
         case 'x':
           // extra off
+          // Finish recording, run hisotory back
+          isRecordingHistory = false;
           digitalWrite(PIN_EXTRA, LOW);
           break;
       
@@ -193,4 +225,8 @@ Motor Main::motorRight(PIN_MOTOR_R1, PIN_MOTOR_R2, PIN_MOTOR_RE);
 bool Main::btConnected = false;
 unsigned int Main::speed = 100;
 
-#endif
+char Main::lastMove = 'x';
+unsigned long Main::lastMoveTime = 0;
+StackArray<char> Main::historyMoves;
+StackArray<unsigned long> Main::historyTimes;
+bool Main::isRecordingHistory = false;
